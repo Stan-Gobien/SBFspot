@@ -1,6 +1,6 @@
 /************************************************************************************************
-	SBFspot - Yet another tool to read power production of SMA® solar inverters
-	(c)2012-2018, SBF
+	SBFspot - Yet another tool to read power production of SMA solar inverters
+	(c)2012-2021, SBF
 
 	Latest version found at https://github.com/SBFspot/SBFspot
 
@@ -8,8 +8,8 @@
 	http://creativecommons.org/licenses/by-nc-sa/3.0/
 
 	You are free:
-		to Share — to copy, distribute and transmit the work
-		to Remix — to adapt the work
+		to Share - to copy, distribute and transmit the work
+		to Remix - to adapt the work
 	Under the following conditions:
 	Attribution:
 		You must attribute the work in the manner specified by the author or licensor
@@ -33,9 +33,6 @@ DISCLAIMER:
 ************************************************************************************************/
 
 #if defined(USE_MYSQL)
-
-//TODO: MAX_INVERTERS is defined twice (Quick but dirty fix)
-const int MAX_INVERTERS = 10;
 
 #include "db_MySQL.h"
 #include <boost/algorithm/string.hpp>
@@ -63,7 +60,7 @@ string db_SQL_Base::status_text(int status)
 	}
 }
 
-int db_SQL_Base::open(string server, string user, string pass, string database)
+int db_SQL_Base::open(const string server, const string user, const string pass, const string database, const unsigned int port)
 {
 	int result = SQL_OK;
 
@@ -74,7 +71,7 @@ int db_SQL_Base::open(string server, string user, string pass, string database)
 		if (database.size() > 0)
 		{
 			m_dbHandle = mysql_init(NULL);
-			if (!mysql_real_connect(m_dbHandle, server.c_str(), user.c_str(), pass.c_str(), database.c_str(), 0, NULL, 0))
+			if (!mysql_real_connect(m_dbHandle, server.c_str(), user.c_str(), pass.c_str(), database.c_str(), port, NULL, 0))
 			{
 			    m_errortext = mysql_error(m_dbHandle);
 				result = SQL_ERROR;
@@ -114,7 +111,7 @@ int db_SQL_Base::type_label(InverterData *inverters[])
 	std::stringstream sql;
 	int rc = SQL_OK;
 
-	for (int inv=0; inverters[inv]!=NULL && inv<MAX_INVERTERS; inv++)
+	for (uint32_t inv=0; inverters[inv]!=NULL && inv<MAX_INVERTERS; inv++)
 	{
 		sql.str("");
 
@@ -153,7 +150,7 @@ int db_SQL_Base::device_status(InverterData *inverters[], time_t spottime)
 	// Take time from computer instead of inverter
 	//time_t spottime = cfg->SpotTimeSource == 0 ? inverters[0]->InverterDatetime : time(NULL);
 
-	for (int inv=0; inverters[inv]!=NULL && inv<MAX_INVERTERS; inv++)
+	for (uint32_t inv=0; inverters[inv]!=NULL && inv<MAX_INVERTERS; inv++)
 	{
 		sql.str("");
 

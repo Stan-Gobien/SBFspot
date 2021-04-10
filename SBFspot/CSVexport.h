@@ -1,5 +1,5 @@
 /************************************************************************************************
-	SBFspot - Yet another tool to read power production of SMA® solar inverters
+	SBFspot - Yet another tool to read power production of SMA solar inverters
 	(c)2012-2018, SBF
 
 	Latest version found at https://github.com/SBFspot/SBFspot
@@ -8,8 +8,8 @@
 	http://creativecommons.org/licenses/by-nc-sa/3.0/
 
 	You are free:
-		to Share — to copy, distribute and transmit the work
-		to Remix — to adapt the work
+		to Share - to copy, distribute and transmit the work
+		to Remix - to adapt the work
 	Under the following conditions:
 	Attribution:
 		You must attribute the work in the manner specified by the author or licensor
@@ -44,13 +44,12 @@ const char *linebreak2txt(void);
 char *FormatFloat(char *str, float value, int width, int precision, char decimalpoint);
 char *FormatDouble(char *str, double value, int width, int precision, char decimalpoint);
 char *DateTimeFormatToDMY(const char *dtf);
-int ExportDayDataToCSV(const Config *cfg, InverterData *inverters[]);
-int ExportEventsToCSV(const Config *cfg, InverterData *inverters[], std::string dt_range_csv);
-int ExportMonthDataToCSV(const Config *cfg, InverterData *inverters[]);
-int ExportSpotDataToCSV(const Config *cfg, InverterData *inverters[]);
-int ExportSpotDataToWSL(const Config *cfg, InverterData *inverters[]);
-int	ExportSpotDataTo123s(Config *cfg, InverterData *inverters[]);
-int	ExportInformationDataTo123s(Config *cfg, InverterData *inverters[]);
-int	ExportStateDataTo123s(Config *cfg, InverterData *inverters[]);
-int ExportBatteryDataToCSV(Config *cfg, InverterData *inverters[]);
-
+int ExportDayDataToCSV(const Config *cfg, InverterData* const inverters[]);
+int ExportEventsToCSV(const Config *cfg, InverterData* const inverters[], std::string dt_range_csv);
+int ExportMonthDataToCSV(const Config *cfg, InverterData* const inverters[]);
+int ExportSpotDataToCSV(const Config *cfg, InverterData* const inverters[]);
+int ExportSpotDataToWSL(const Config *cfg, InverterData* const inverters[]);
+int	ExportSpotDataTo123s(const Config *cfg, InverterData* const inverters[]);
+int	ExportInformationDataTo123s(const Config *cfg, InverterData* const inverters[]);
+int	ExportStateDataTo123s(const Config *cfg, InverterData* const inverters[]);
+int ExportBatteryDataToCSV(const Config *cfg, InverterData* const inverters[]);

@@ -17,7 +17,7 @@ LD = g++
 APPNAME = SBFspot
 INSTALLDIR = /usr/local/bin/sbfspot.3/
 
-SRC_NOSQL  := boost_ext.cpp misc.cpp sunrise_sunset.cpp SBFNet.cpp CSVexport.cpp Ethernet.cpp EventData.cpp ArchData.cpp SBFspot.cpp TagDefs.cpp Bluetooth.cpp mqtt.cpp
+SRC_NOSQL  := boost_ext.cpp main.cpp misc.cpp sunrise_sunset.cpp SBFNet.cpp CSVexport.cpp Ethernet.cpp EventData.cpp Inverter.cpp ArchData.cpp SBFspot.cpp TagDefs.cpp Bluetooth.cpp mqtt.cpp
 SRC_SQLITE := $(SRC_NOSQL) db_SQLite.cpp db_SQLite_Export.cpp
 SRC_MYSQL  := $(SRC_NOSQL) db_MySQL.cpp db_MySQL_Export.cpp
 SRC_MARIADB:= $(SRC_MYSQL)
@@ -25,7 +25,7 @@ SRC_MARIADB:= $(SRC_MYSQL)
 CFLAGS     := -c -Wall -O2 -Wno-unused-local-typedefs
 INCDIR     :=
 LIBDIR     :=
-LIBS       := pthread bluetooth boost_date_time boost_system boost_filesystem boost_regex
+LIBS       := pthread bluetooth boost_date_time
 LDFLAGS    := -s
 
 # Default Target = Install SQLite
@@ -103,13 +103,13 @@ install:
 	$(CMD_COPY) date_time_zonespec.csv $(INSTALLDIR)
 	$(CMD_COPY) SBFspot.cfg $(INSTALLDIR)SBFspot.default.cfg
 ifeq ($(MAKECMDGOALS),install_sqlite)
-	$(CMD_COPY) *SQLite.sql $(INSTALLDIR)
+	$(CMD_COPY) *SQLite*.sql $(INSTALLDIR)
 endif
 ifeq ($(MAKECMDGOALS),install_mysql)
-	$(CMD_COPY) *MySQL.sql $(INSTALLDIR)
+	$(CMD_COPY) *MySQL*.sql $(INSTALLDIR)
 endif
 ifeq ($(MAKECMDGOALS),install_mariadb)
-	$(CMD_COPY) *MySQL.sql $(INSTALLDIR)
+	$(CMD_COPY) *MySQL*.sql $(INSTALLDIR)
 endif
 	
 $(OBJDIR)%.o: %.cpp

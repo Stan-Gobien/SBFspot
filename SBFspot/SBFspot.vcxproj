@@ -335,10 +335,6 @@ copy "$(ProjectDir)SBFspot.cfg" "$(OutDir)SBFspot.default.cfg"
     <None Include="TagListFR-FR.txt" />
     <None Include="TagListIT-IT.txt" />
     <None Include="TagListNL-NL.txt" />
-    <None Include="Update_300_301_MySQL.sql" />
-    <None Include="Update_300_301_SQLite.sql" />
-    <None Include="Update_30x_302_MySQL.sql" />
-    <None Include="Update_30x_302_SQLite.sql" />
     <None Include="Update_340_MySQL.sql" />
     <None Include="Update_340_SQLite.sql" />
   </ItemGroup>
@@ -373,6 +369,7 @@ copy "$(ProjectDir)SBFspot.cfg" "$(OutDir)SBFspot.default.cfg"
     </ClInclude>
     <ClInclude Include="Ethernet.h" />
     <ClInclude Include="EventData.h" />
+    <ClInclude Include="Inverter.h" />
     <ClInclude Include="misc.h" />
     <ClInclude Include="mqtt.h" />
     <ClInclude Include="oslinux.h" />
@@ -387,6 +384,7 @@ copy "$(ProjectDir)SBFspot.cfg" "$(OutDir)SBFspot.default.cfg"
     </ClInclude>
     <ClInclude Include="sunrise_sunset.h" />
     <ClInclude Include="TagDefs.h" />
+    <ClInclude Include="Types.h" />
     <ClInclude Include="version.h" />
   </ItemGroup>
   <ItemGroup>
@@ -421,6 +419,8 @@ copy "$(ProjectDir)SBFspot.cfg" "$(OutDir)SBFspot.default.cfg"
     <ClCompile Include="endianness.h" />
     <ClCompile Include="Ethernet.cpp" />
     <ClCompile Include="EventData.cpp" />
+    <ClCompile Include="Inverter.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="misc.cpp" />
     <ClCompile Include="mqtt.cpp" />
     <ClCompile Include="SBFNet.cpp" />

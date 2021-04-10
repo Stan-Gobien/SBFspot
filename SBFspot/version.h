@@ -1,28 +1,14 @@
-#define VERSION "3.6.0"
+#define VERSION "3.8.0"
 
-// V3.5.1
-// Fixed #230: Unknown Inverter Type SBS3.7-10
-// Fixed #261: Unknown Inverter Type STP4.0-3AV-40
-// Fixed #269: SMA STP6.0-3AV-40 no readout with SBFspot?
-// Fixed #279: Unknown inverter type SMA STP6.0-3AV-40
-// Fixed #281: SBFspotUploadDaemon not uploading
-// Fixed #287: Unknown Inverter Type: STP5.0-3AV-40
-
-// V3.5.2
-// Fixed #297: 0x000024BA and Inverter Type=SB3.6-1AV-41
-
-// V3.5.3
-// Fixed #302: Unknown Inverter Type - SMA Sunny Tripower 3.0
-// Fixed #309: Unknown Inverter Type - SMA Sunny Tripower 8.0
-// Fix warnings [-Wformat-truncation=] Raspbian Buster (gcc 8.3)
-
-// V3.5.4
-// Fixed #???: Error! Could not open file C\?\C:\PathToConfig\SBFspot.cfg (Windows only - reported by mail)
-// Fixed #327: Unknown inverter: Sunny Boy Storage 5.0 (SBS5.0-10) & Sunny Tripower 10.0 (STP10.0-3AV-40)
-// Fixed #328: Unknown inverter type Sunny Boy Storage 6.0
-
-// V3.6.0
-// MQTT support
+/*
+V3.8.0
+	Fix memory leaks (see #318)
+	Fix #7 MariaDB10 with Port 3307
+	Fix SQL daydata export (for PVoutput) : Include zero record, just after production stopped
+	Fix #395 Mix of ISO-8859-1 and UTF-8, CRLF and LF line endings
+	Merged #425 Move Inverter related stuff to dedicated class
+	Fix #290 Etoday and temperature are shown as ZERO from STP6.0 inverter
+*/
 
 /***
 *

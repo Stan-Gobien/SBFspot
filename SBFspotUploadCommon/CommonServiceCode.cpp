@@ -1,6 +1,6 @@
 /************************************************************************************************
-	SBFspot - Yet another tool to read power production of SMA® solar inverters
-	(c)2012-2018, SBF
+	SBFspot - Yet another tool to read power production of SMA solar inverters
+	(c)2012-2021, SBF
 
 	Latest version found at https://github.com/SBFspot/SBFspot
 
@@ -8,8 +8,8 @@
 	http://creativecommons.org/licenses/by-nc-sa/3.0/
 
 	You are free:
-		to Share — to copy, distribute and transmit the work
-		to Remix — to adapt the work
+		to Share - to copy, distribute and transmit the work
+		to Remix - to adapt the work
 	Under the following conditions:
 	Attribution:
 		You must attribute the work in the manner specified by the author or licensor
@@ -34,6 +34,8 @@ DISCLAIMER:
 
 #include "CommonServiceCode.h"
 
+const uint32_t MAX_INVERTERS = 20;
+
 void CommonServiceCode(void)
 {
 	CURLcode rc_curl = CURLE_OK;
@@ -44,13 +46,17 @@ void CommonServiceCode(void)
 	int nextStatusCheck = 0;
 	const int timeBetweenChecks = 2 * 60 * 60;	// every 2 hours
 
-	db_SQL_Base db = db_SQL_Base();
+	db_SQL_Base db;
 
     // Periodically check if the service is stopping.
     while (!bStopping)
     {
         msg.str("");
-		db.open(cfg.getSqlHostname(), cfg.getSqlUsername(), cfg.getSqlPassword(), cfg.getSqlDatabase());
+#if defined(USE_MYSQL)
+		db.open(cfg.getSqlHostname(), cfg.getSqlUsername(), cfg.getSqlPassword(), cfg.getSqlDatabase(), cfg.getSqlPort());
+#elif defined(USE_SQLITE)
+		db.open(cfg.getSqlDatabase());
+#endif
 
 		if (db.isopen())
 		{
@@ -67,10 +73,6 @@ void CommonServiceCode(void)
 					{
                         batch_datelimit = PVO.batch_datelimit();
                         batch_statuslimit = PVO.batch_statuslimit();
-						//Fix Issue 131
-                        //db.get_config(SQL_BATCH_DATELIMIT, batch_datelimit);
-                        //db.get_config(SQL_BATCH_STATUSLIMIT, batch_statuslimit);
-
                         nextStatusCheck = now + timeBetweenChecks;
                         db.set_config(SQL_BATCH_DATELIMIT, db.intToString(batch_datelimit));
                         db.set_config(SQL_BATCH_STATUSLIMIT, db.intToString(batch_statuslimit));

@@ -1,6 +1,6 @@
 /************************************************************************************************
-	SBFspot - Yet another tool to read power production of SMA® solar inverters
-	(c)2012-2018, SBF
+	SBFspot - Yet another tool to read power production of SMA solar inverters
+	(c)2012-2021, SBF
 
 	Latest version found at https://github.com/SBFspot/SBFspot
 
@@ -8,8 +8,8 @@
 	http://creativecommons.org/licenses/by-nc-sa/3.0/
 
 	You are free:
-		to Share — to copy, distribute and transmit the work
-		to Remix — to adapt the work
+		to Share - to copy, distribute and transmit the work
+		to Remix - to adapt the work
 	Under the following conditions:
 	Attribution:
 		You must attribute the work in the manner specified by the author or licensor
@@ -46,7 +46,7 @@ int db_SQL_Export::day_data(InverterData *inverters[])
 	{
 		exec_query("BEGIN IMMEDIATE TRANSACTION");
 
-		for (int inv=0; inverters[inv]!=NULL && inv<MAX_INVERTERS; inv++)
+		for (uint32_t inv=0; inverters[inv]!=NULL && inv<MAX_INVERTERS; inv++)
 		{
 			const unsigned int numelements = sizeof(inverters[inv]->dayData)/sizeof(DayData);
 			unsigned int first_rec, last_rec;
@@ -67,6 +67,10 @@ int db_SQL_Export::day_data(InverterData *inverters[])
 				if ((inverters[inv]->dayData[last_rec].datetime != 0) && (inverters[inv]->dayData[last_rec].watt != 0))
 					break;
 			}
+
+			// Include zero record, just after production stopped
+			if ((last_rec < numelements - 1) && (inverters[inv]->dayData[last_rec + 1].datetime != 0))
+				last_rec++;
 
 			if (first_rec < last_rec) // Production data found or all zero?
 			{
@@ -124,7 +128,7 @@ int db_SQL_Export::month_data(InverterData *inverters[])
 	{
 		exec_query("BEGIN IMMEDIATE TRANSACTION");
 
-		for (int inv=0; inverters[inv]!=NULL && inv<MAX_INVERTERS; inv++)
+		for (uint32_t inv=0; inverters[inv]!=NULL && inv<MAX_INVERTERS; inv++)
 		{
 			//Fix Issue 74: Double data in Monthdata tables
 			tm *ptm = gmtime(&inverters[inv]->monthData[0].datetime);
@@ -187,7 +191,7 @@ int db_SQL_Export::spot_data(InverterData *inv[], time_t spottime)
 	std::stringstream sql;
 	int rc = SQLITE_OK;
 
-	for (int i=0; inv[i]!=NULL && i<MAX_INVERTERS; i++)
+	for (uint32_t i=0; inv[i]!=NULL && i<MAX_INVERTERS; i++)
 	{
 		sql.str("");
 		sql << "INSERT INTO SpotData VALUES(" <<
@@ -238,7 +242,7 @@ int db_SQL_Export::event_data(InverterData *inv[], TagDefs& tags)
 	{
 		exec_query("BEGIN IMMEDIATE TRANSACTION");
 
-		for (int i=0; inv[i]!=NULL && i<MAX_INVERTERS; i++)
+		for (uint32_t i=0; inv[i]!=NULL && i<MAX_INVERTERS; i++)
 		{
 			for (std::vector<EventData>::iterator it=inv[i]->eventData.begin(); it!=inv[i]->eventData.end(); ++it)
 			{
@@ -326,7 +330,7 @@ int db_SQL_Export::battery_data(InverterData *inverters[], time_t spottime)
 	{
 		exec_query("BEGIN IMMEDIATE TRANSACTION");
 
-		for (int inv=0; inverters[inv]!=NULL && inv<MAX_INVERTERS; inv++)
+		for (uint32_t inv=0; inverters[inv]!=NULL && inv<MAX_INVERTERS; inv++)
 		{
 			InverterData* id = inverters[inv];
 		    if ((id->DevClass == BatteryInverter) || (id->hasBattery))

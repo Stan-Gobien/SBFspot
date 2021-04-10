@@ -1,5 +1,5 @@
 /************************************************************************************************
-	SBFspot - Yet another tool to read power production of SMA® solar inverters
+	SBFspot - Yet another tool to read power production of SMA solar inverters
 	(c)2012-2018, SBF
 
 	Latest version found at https://github.com/SBFspot/SBFspot
@@ -8,8 +8,8 @@
 	http://creativecommons.org/licenses/by-nc-sa/3.0/
 
 	You are free:
-		to Share — to copy, distribute and transmit the work
-		to Remix — to adapt the work
+		to Share - to copy, distribute and transmit the work
+		to Remix - to adapt the work
 	Under the following conditions:
 	Attribution:
 		You must attribute the work in the manner specified by the author or licensor
@@ -46,7 +46,7 @@ SOCKET sock = 0;
 //http://www.winsocketdotnetworkprogramming.com/winsock2programming/winsock2advancedotherprotocol4p.html
 //Windows Sockets Error Codes: http://msdn.microsoft.com/en-us/library/ms740668(v=vs.85).aspx
 
-int bthConnect(char *btAddr)
+int bthConnect(const char *btAddr)
 {
 	WSADATA wsd;
 	SOCKADDR_BTH sab;
@@ -296,7 +296,7 @@ void bthClear()
 
 struct sockaddr_rc addr = {0};
 
-int bthConnect(char *btAddr)
+int bthConnect(const char *btAddr)
 {
     int status = 0;
     sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
@@ -427,4 +427,3 @@ int bthRead(unsigned char *buf, unsigned int bufsize)
 
     return bytes_read;
 }
-
